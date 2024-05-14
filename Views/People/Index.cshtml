@@ -1,0 +1,78 @@
+﻿@model IList<Person> // giving instructions to the view : which type is my model 
+                    <!-- the model is not dynamic anymore: it is an IList -->
+@{
+    ViewBag.Title = "People List";
+}
+
+<!-- @Model : then my model is dynamic -->
+
+<div class="container mt-5">
+    <h2>@ViewBag.Title</h2>
+
+    <a asp-action="Create" class="btn btn-primary">+ New Person</a>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Email Address</th>
+                <th scope="col">Organization</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var person in Model)
+            {
+                <partial name="PersonRowPartial" model="person"/> // We are in C# (it's Razor) so we don't need to write @person
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Modals
+{
+    <!-- Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Delete Person</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>                                  <!-- ="data-bootstrap-dismiss" -->
+                <div class="modal-body">
+                    <p>Are you sure you want to delete <span id="personFirstName"></span> <span id="personLastName"></span> <span id="personEmail"></span>?</p>
+                </div>
+                <div class="modal-footer">
+                    <form asp-action="DeleteConfirmed" method="post">
+                        <input type="hidden" name="Id" />
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                        <button type="submit" class="btn btn-primary">Yes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts
+{
+    <script> // JQuery
+        $(function () {
+            // for each button with a data-mode attribute equals to "delete"
+            $("button[data-mode='delete']").on("click", function () {
+                let id = $(this).data("id"); // get the value of data-id and puts it in the variable id
+                let firstName = $(this).data("firstName");
+                let lastName = $(this).data("lastName");
+                let email = $(this).data("email");
+
+                $("#deleteModal input[name='Id']").val(id); // put the id value in the name attribute of our form
+                $("#personFirstName").html(firstName);
+                $("#personLastName").html(lastName);
+                if (email != "") {
+                    $("#personEmail").html("(" + email + ")");
+                }
+            });
+        });
+    </script>
+}

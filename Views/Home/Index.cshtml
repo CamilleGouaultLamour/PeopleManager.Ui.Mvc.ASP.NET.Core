@@ -1,8 +1,24 @@
-﻿@{
+﻿@model IList<Person>
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="text-center mb-3">
+    <h2 class="display-4">Employee of the Week</h2>
+    <div class="mb-3">
+        <partial name="EmployeeRowPartial" model="Model[0]" />
+    </div>
+</div>
+
+<div class="text-center mb-3">
+    <h2 class="display-4">Employees</h2>
+    <div class="row">
+        @foreach (var person in Model)
+        {
+            <div class="col-4 mb-3">
+                <partial name="EmployeeRowPartial" model="person" />
+                <!-- We are in C# (it's Razor) so we don't need to write @person -->
+            </div>
+        }
+    </div>
 </div>

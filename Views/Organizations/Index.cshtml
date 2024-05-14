@@ -1,0 +1,70 @@
+﻿@model IList<Organization> // giving instructions to the view : which type is my model
+<!-- the model is not dynamic anymore: it is an IList -->
+@{
+    ViewBag.Title = "Organization List";
+}
+
+<!-- @Model : then my model is dynamic -->
+
+<div class="container mt-5">
+    <h2>@ViewBag.Title</h2>
+
+    <a asp-action="Create" class="btn btn-primary">+ New Organization</a>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var organization in Model)
+            {
+                <partial name="OrganizationRowPartial" model="organization" />
+                // We are in C# (it's Razor) so we don't need to write @person
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Modals
+{
+    <!-- Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Delete Organization</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete <span id="organizationName"></span>?</p>
+                </div>
+                <div class="modal-footer">
+                    <form asp-action="DeleteConfirmed" method="post">
+                        <input type="hidden" name="Id" />
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                        <button type="submit" class="btn btn-primary">Yes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts
+{
+    <script>
+        $(function () {
+            $("button[data-mode='delete']").on("click", function () {
+                let id = $(this).data("id");
+                let name = $(this).data("name");
+
+                $("#deleteModal input[name='Id']").val(id);
+                $("#organizationName").html(name);
+            });
+        });
+    </script>
+}

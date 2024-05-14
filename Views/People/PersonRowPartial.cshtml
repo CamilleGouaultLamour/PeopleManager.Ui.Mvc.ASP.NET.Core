@@ -1,0 +1,37 @@
+﻿@model Person
+
+<tr>
+    <td>@Model.FirstName</td>
+    <td>@Model.LastName</td>
+    <td>
+        @if (!string.IsNullOrWhiteSpace(Model.Email))
+        {
+            <a href="mailto:@Model.Email">@Model.Email</a>
+        }
+    </td>
+    <td>
+        @if (Model.Organization is not null)
+        {
+            @Model.Organization.Name
+        }
+    </td>
+    <td>
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
+        <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Delete</a>
+        <!-- Button trigger modal -->
+        <button type="button"
+                class="btn btn-danger"
+                data-bs-toggle="modal"
+                data-bs-target="#deleteModal"
+                data-id="@Model.Id"
+                data-mode="delete"
+                data-first-name="@Model.FirstName"
+                data-last-name="@Model.LastName"
+                data-email="@Model.Email">            
+            Delete with modal
+        </button>
+        <!-- or data-delete="true"
+                 or data-type="delete"
+            -->
+    </td>
+</tr>

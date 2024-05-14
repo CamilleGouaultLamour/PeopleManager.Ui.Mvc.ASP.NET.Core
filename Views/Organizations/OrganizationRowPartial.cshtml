@@ -1,0 +1,24 @@
+﻿@model Organization
+
+<tr>
+    <td>@Model.Name</td>
+    <td>
+        @if (!string.IsNullOrWhiteSpace(Model.Description))
+        {
+            @Model.Description
+        }
+    </td>
+    <td>
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
+        <!-- Button trigger modal -->
+        <button type="button"
+                class="btn btn-danger"
+                data-bs-toggle="modal"
+                data-bs-target="#deleteModal"
+                data-id="@Model.Id"
+                data-mode="delete"
+                data-name="@Model.Name">
+            Delete
+        </button>
+    </td>
+</tr>

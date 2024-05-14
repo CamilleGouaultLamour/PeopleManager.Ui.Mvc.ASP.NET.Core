@@ -1,0 +1,35 @@
+﻿@model Person
+
+@{
+    var organizations = (IList<Organization>)ViewBag.Organizations;
+}
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+<div class="mb-3">
+    <label asp-for="FirstName" class="form-label"></label>
+    <input asp-for="FirstName" class="form-control">
+    <span asp-validation-for="FirstName" class="text-danger"></span>
+</div>
+<div class="mb-3">
+    <label asp-for="LastName" class="form-label"></label>
+    <input asp-for="LastName" class="form-control">
+    <span asp-validation-for="LastName" class="text-danger"></span>
+</div>
+<div class="mb-3">
+    <label asp-for="Email" class="form-label">Email address</label>
+    <input asp-for="Email" class="form-control" aria-describedby="emailHelp">
+    <span asp-validation-for="Email" class="text-danger"></span>
+    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+</div>
+<div class="mb-3">
+    <label asp-for="OrganizationId" class="form-label">Organization</label>
+    <select asp-for="OrganizationId" class="form-control">
+        <option value="">No organization</option>
+        @foreach(var organization in organizations)
+        {
+            <option value="@organization.Id">@organization.Name</option>
+        }
+    </select>
+    <span asp-validation-for="OrganizationId" class="text-danger"></span>
+</div>

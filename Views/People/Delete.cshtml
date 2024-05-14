@@ -1,0 +1,14 @@
+﻿@model Person
+@{
+    ViewBag.Title = "Delete Person";
+}
+
+<h1>@ViewBag.Title</h1>
+
+<form method="post">
+    <!-- <input type="hidden" asp-for="Id"/> if the id wasn't in the URL-->
+    <p>Are you sure you want to delete @Model.FirstName @Model.LastName (@Model.Email)?</p>
+
+    <a asp-action="Index" class="btn btn-primary">No</a>
+    <button type="submit" class="btn btn-danger">Yes</button>
+</form>

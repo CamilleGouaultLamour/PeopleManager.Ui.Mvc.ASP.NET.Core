@@ -1,0 +1,13 @@
+﻿@model Person
+@{
+    ViewBag.Title = "Create Person";
+}
+
+<h1>@ViewBag.Title</h1>
+
+<form method="post">
+    <!-- to post in another action: asp-action="Summary" -->
+    <partial name="CreateEditPartial" model="Model"/>
+
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>
